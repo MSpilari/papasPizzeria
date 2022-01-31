@@ -8,3 +8,7 @@
 	margin: 0;
 	font-family: 'Poppins', sans-serif;
 }
+
+.loginBgImage {
+	background-image: url('../src/assets/loginBg.jpg');
+}
