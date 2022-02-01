@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import BigLogo from '../../assets/BigLogo.png'
 
 const Introduction = ({ setToLogin }) => {
 	return (
