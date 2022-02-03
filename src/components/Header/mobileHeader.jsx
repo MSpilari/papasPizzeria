@@ -13,7 +13,7 @@ const MobileHeader = () => {
 		<>
 			{isSideMenuOpen && <SideProfile />}
 			<header
-				className='absolute top-0 w-full h-24 flex items-center justify-around
+				className='sticky top-0 w-full h-24 flex items-center justify-around
 			border-b-2 border-b-slate-300 bg-white lg:hidden
 			'
 			>
@@ -44,7 +44,7 @@ const MobileHeader = () => {
 				</div>
 			</header>
 			<footer
-				className='absolute bottom-0 w-full flex items-center 
+				className='fixed bottom-0 w-full flex items-center 
 			h-16 justify-around border-t-2 border-t-slate-300 bg-white lg:hidden'
 			>
 				<button className='flex items-center justify-center text-2xl h-full w-full text-slate-500'>
