@@ -8,7 +8,7 @@ import Image from 'next/image'
 const SideProfile = () => {
 	return (
 		<aside
-			className='w-[70%] md:w-[40%] z-10 absolute top-24 h-[calc(100%-96px)] 
+			className='w-[70%] md:w-[40%] z-20 absolute top-24 h-[calc(100%-96px)] 
     flex flex-col items-center bg-white'
 		>
 			<div className='relative mt-3 h-20 w-20 rounded-full overflow-hidden '>
