@@ -32,6 +32,7 @@ const MobileHeader = () => {
 						sizes='50vw'
 						src={LogoSmall}
 						alt='Papa`s Pizzeria Logo'
+						priority
 					/>
 				</div>
 				<div className='relative mr-3 h-14 w-16 rounded-full overflow-hidden '>

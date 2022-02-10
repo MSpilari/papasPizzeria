@@ -38,6 +38,7 @@ const Featured = () => {
 					sizes='50vw'
 					layout='fill'
 					alt='Featured Pizza'
+					priority
 				/>
 			</div>
 			<button
