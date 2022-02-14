@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Header } from '../../src/components/Header'
+import { Loading } from '../../src/components/Loading'
 import { PizzaDetails } from '../../src/components/PizzaDetails'
 
 const PizzaInfo = () => {
@@ -22,7 +23,7 @@ const PizzaInfo = () => {
 			<div className='w-full h-full'>
 				<Header />
 				<div className='w-full h-[calc(100%-160px)] overflow-y-auto'>
-					{!pizzaData ? <h1>Loading...</h1> : <PizzaDetails />}
+					{!pizzaData ? <Loading /> : <PizzaDetails />}
 				</div>
 			</div>
 		</main>
