@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const PizzaCard = ({ name, description, image, price, id }) => {
 	return (
-		<Link href={`/pizza/${id}`} passHref>
+		<Link className='cursor-pointer' href={`/pizza/${id}`} passHref>
 			<div className='w-[90%] max-w-xs h-[200px] flex flex-col items-center border-2 border-slate-300 rounded-3xl overflow-hidden my-2'>
 				<div className='relative w-full h-full'>
 					<Image
