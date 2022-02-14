@@ -17,7 +17,7 @@ const Menu = ({ data }) => {
 }
 
 export async function getServerSideProps() {
-	const res = await fetch('http://localhost:3000/api/allPizzas')
+	const res = await fetch('http://localhost:3000/api/pizzas')
 
 	const data = await res.json()
 
