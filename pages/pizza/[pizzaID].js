@@ -23,7 +23,7 @@ const PizzaInfo = () => {
 			<div className='w-full h-full'>
 				<Header />
 				<div className='w-full h-[calc(100%-160px)] overflow-y-auto'>
-					{!pizzaData ? <Loading /> : <PizzaDetails />}
+					{!pizzaData ? <Loading /> : <PizzaDetails pizzaData={pizzaData} />}
 				</div>
 			</div>
 		</main>
