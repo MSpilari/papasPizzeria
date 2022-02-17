@@ -1,10 +1,13 @@
-import { useState } from 'react'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { formatter } from '../../utils/currencyFormatter'
 
-const TitlePriceQtyDesc = ({ name, price, addOnsCost, description }) => {
-	const [quantity, setQuantity] = useState(1)
-
+const TitlePriceQtyDesc = ({
+	name,
+	description,
+	quantity,
+	setQuantity,
+	fullCost
+}) => {
 	return (
 		<>
 			<div className='w-[90%] mx-auto my-1'>
@@ -13,7 +16,7 @@ const TitlePriceQtyDesc = ({ name, price, addOnsCost, description }) => {
 
 			<div className='w-[90%] mx-auto flex items-center justify-between'>
 				<span className='text-2xl text-guideOrange'>
-					{formatter.format(price * quantity + addOnsCost)}
+					{formatter.format(fullCost)}
 				</span>
 
 				<div className='flex items-center'>
