@@ -6,9 +6,14 @@ import { MdPlace } from 'react-icons/md'
 import { FaShoppingBag } from 'react-icons/fa'
 import { BsFillBellFill, BsFillHeartFill } from 'react-icons/bs'
 import LogoSmall from '../../assets/SmallLogo.png'
+import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 const MobileHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
+
+	const cartLength = useSelector(state => state.cart.length)
+
 	return (
 		<>
 			{isSideMenuOpen && <SideProfile />}
@@ -58,11 +63,21 @@ const MobileHeader = () => {
 						<MdPlace />
 					</i>
 				</button>
-				<button className='flex items-center justify-center text-2xl h-full w-full text-slate-500'>
-					<i>
-						<FaShoppingBag />
-					</i>
-				</button>
+				<Link href='/cart' passHref>
+					<button
+						className={`relative flex flex-col items-center justify-center text-2xl h-full w-full 
+					${cartLength == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
+					>
+						{cartLength != 0 && (
+							<div className='absolute top-3 right-4 w-4 h-4 rounded-full text-xs bg-guideRed text-white animate-pulse'>
+								{cartLength}
+							</div>
+						)}
+						<i>
+							<FaShoppingBag />
+						</i>
+					</button>
+				</Link>
 				<button className='flex items-center justify-center text-2xl h-full w-full text-slate-500'>
 					<i>
 						<BsFillHeartFill />
