@@ -69,7 +69,7 @@ const MobileHeader = () => {
 					${cartLength == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
 					>
 						{cartLength != 0 && (
-							<div className='absolute top-3 right-4 w-4 h-4 rounded-full text-xs bg-guideRed text-white animate-pulse'>
+							<div className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 rounded-full text-xs bg-guideRed text-white animate-pulse'>
 								{cartLength}
 							</div>
 						)}
