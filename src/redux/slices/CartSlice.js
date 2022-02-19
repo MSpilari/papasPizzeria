@@ -1,29 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, nanoid } from '@reduxjs/toolkit'
 
-const initialValue = [
-	{
-		name: 'Chicken Hawaiian',
-		quantity: 2,
-		finalCost: 20,
-		optionals: [
-			{
-				ingredient: 'Onions',
-				price: 2
-			}
-		]
-	}
-]
+const initialValue = []
 
 const CartSlice = createSlice({
 	name: 'cart',
 	initialState: initialValue,
 	reducers: {
-		cartAdded(state, action) {
-			state.push(action.payload)
+		cartAdded: {
+			reducer(state, action) {
+				state.push(action.payload)
+			},
+			prepare(chosenPizza) {
+				const id = nanoid()
+				return {
+					payload: {
+						id,
+						...chosenPizza
+					}
+				}
+			}
+		},
+		cartRemoved(state, action) {
+			const { id } = action.payload
+			return state.filter(pizza => pizza.id != id)
 		}
 	}
 })
 
-export const { cartAdded } = CartSlice.actions
+export const { cartAdded, cartRemoved } = CartSlice.actions
 
 export default CartSlice.reducer
