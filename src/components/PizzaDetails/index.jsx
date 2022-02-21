@@ -20,7 +20,7 @@ const PizzaDetails = ({ pizzaData }) => {
 	const dispatch = useDispatch()
 
 	return (
-		<div className='w-full h-full flex flex-col'>
+		<div className='w-full h-full flex flex-col lg:grid lg:grid-cols-2 lg:grid-rows-2'>
 			<BackLikeImage image={image} />
 
 			<TitlePriceQtyDesc
@@ -35,7 +35,7 @@ const PizzaDetails = ({ pizzaData }) => {
 
 			<button
 				className='flex items-center mx-auto my-2 py-1 
-								px-2 bg-guideOrange rounded-full text-white'
+								px-2 bg-guideOrange rounded-full text-white lg:col-start-2 '
 				onClick={() => {
 					dispatch(
 						cartAdded({
