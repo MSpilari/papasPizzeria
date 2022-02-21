@@ -7,7 +7,7 @@ const Menu = ({ data }) => {
 		<main className='w-screen h-screen'>
 			<div className='w-full h-full'>
 				<Header />
-				<div className='w-full h-[calc(100%-160px)] overflow-y-auto'>
+				<div className='w-full h-[calc(100%-160px)] lg:h-[calc(100%-96px)] overflow-y-auto'>
 					<Featured />
 					<MenuList allPizzas={data} />
 				</div>
