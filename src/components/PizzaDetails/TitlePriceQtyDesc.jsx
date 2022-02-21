@@ -9,12 +9,12 @@ const TitlePriceQtyDesc = ({
 	fullCost
 }) => {
 	return (
-		<>
-			<div className='w-[90%] mx-auto my-1'>
+		<section className='lg:mt-auto lg:flex lg:flex-col'>
+			<div className='w-[90%] mx-auto my-1 lg:col-start-2 lg:mt-auto'>
 				<h1 className='text-xl truncate'>{name}</h1>
 			</div>
 
-			<div className='w-[90%] mx-auto flex items-center justify-between'>
+			<div className='w-[90%] mx-auto flex items-center justify-between lg:my-0'>
 				<span className='text-2xl text-guideOrange'>
 					{formatter.format(fullCost)}
 				</span>
@@ -41,10 +41,10 @@ const TitlePriceQtyDesc = ({
 				</div>
 			</div>
 
-			<p className='w-[90%] mx-auto my-2 text-sm text-gray-500'>
+			<p className='w-[90%] mx-auto my-2 text-sm text-gray-500 lg:col-start-2 lg:mb-2'>
 				{description}
 			</p>
-		</>
+		</section>
 	)
 }
 
