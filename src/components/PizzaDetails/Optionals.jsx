@@ -18,7 +18,7 @@ const Optionals = ({ optional, addOns, setAddOns }) => {
 	}
 
 	return (
-		<div className='w-[90%] mx-auto flex flex-col'>
+		<div className='w-[90%] mx-auto flex flex-col lg:col-start-2 lg:row-start-2'>
 			<h2 className='my-1 w-full'>Choice of Add On</h2>
 
 			<div className='flex flex-col w-full'>
