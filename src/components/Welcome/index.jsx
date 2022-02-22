@@ -38,7 +38,7 @@ const Welcome = ({ providers }) => {
 						{Object.values(providers).map(provider => (
 							<button
 								key={provider.name}
-								onClick={() => signIn(provider.id)}
+								onClick={() => signIn(provider.id, { callbackUrl: '/menu' })}
 								className='w-full mr-2 flex items-center justify-center px-4 py-2 
 												 bg-white text-sm text-guideOrange 
 													 font-bold rounded-3xl lg:max-w-xs'
