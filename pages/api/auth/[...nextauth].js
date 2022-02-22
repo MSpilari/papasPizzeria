@@ -9,5 +9,8 @@ export default NextAuth({
 			clientSecret: process.env.GOOGLE_SECRET
 		})
 		// ...add more providers here
-	]
+	],
+	pages: {
+		signIn: '/login'
+	}
 })
