@@ -6,11 +6,13 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { FaShoppingBag } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
-import { BsFillBellFill, BsFillHeartFill } from 'react-icons/bs'
+import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
 import { MdPlace } from 'react-icons/md'
+import { useSession } from 'next-auth/react'
 
 const DesktopHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
+	const { data: session, status } = useSession()
 	const cartLength = useSelector(state => state.cart.length)
 	return (
 		<>
@@ -52,7 +54,7 @@ const DesktopHeader = () => {
 					<Link href='/cart' passHref>
 						<button
 							className={`relative flex flex-col items-center justify-center text-2xl h-full w-full 
-					${cartLength == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
+												 ${cartLength == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
 						>
 							{cartLength != 0 && (
 								<div className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 rounded-full text-xs bg-guideRed text-white animate-pulse'>
@@ -75,14 +77,22 @@ const DesktopHeader = () => {
 						</i>
 					</button>
 				</nav>
-				<div className='relative mx-5 h-14 w-16 rounded-full overflow-hidden '>
-					<Image
-						sizes='50vw'
-						src='https://github.com/MSpilari.png'
-						layout='fill'
-						alt='User Pic'
-					/>
-				</div>
+				{status == 'unauthenticated' || status == 'loading' ? (
+					<div className='relative mx-5 h-14 w-16 flex items-center justify-center'>
+						<i className='text-4xl text-slate-500'>
+							<BsPersonFill />
+						</i>
+					</div>
+				) : (
+					<div className='relative mx-5 h-14 w-16 rounded-full overflow-hidden'>
+						<Image
+							sizes='50vw'
+							src={session.user.image}
+							layout='fill'
+							alt='User Pic'
+						/>
+					</div>
+				)}
 			</header>
 		</>
 	)
