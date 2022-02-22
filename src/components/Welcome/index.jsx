@@ -1,8 +1,9 @@
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { FaFacebookSquare } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 
-const Welcome = () => {
+const Welcome = ({ providers }) => {
 	return (
 		<div className='w-full h-full loginBgImage bg-cover '>
 			<div className='w-full h-full flex flex-col items-center bg-[rgba(0,0,0,0.6)]'>
@@ -34,6 +35,23 @@ const Welcome = () => {
 					</div>
 
 					<div className='flex w-full items-center justify-between lg:justify-around'>
+						{Object.values(providers).map(provider => (
+							<button
+								key={provider.name}
+								onClick={() => signIn(provider.id)}
+								className='w-full mr-2 flex items-center justify-center px-4 py-2 
+												 bg-white text-sm text-guideOrange 
+													 font-bold rounded-3xl lg:max-w-xs'
+							>
+								{provider.name === 'Google' && (
+									<i className='mr-1 text-3xl'>
+										<FcGoogle />
+									</i>
+								)}
+								{provider.name}
+							</button>
+						))}
+
 						<button
 							className='w-full mr-2 flex items-center justify-center px-4 py-2 
 						bg-white text-sm text-guideOrange 
@@ -43,16 +61,6 @@ const Welcome = () => {
 								<FaFacebookSquare />
 							</i>
 							Facebook
-						</button>
-						<button
-							className='w-full ml-2 flex items-center justify-center px-4 py-2 
-						bg-white text-sm text-guideOrange font-bold 
-						rounded-3xl lg:max-w-xs'
-						>
-							<i className='mr-1 text-3xl'>
-								<FcGoogle />
-							</i>
-							Google
 						</button>
 					</div>
 				</div>
