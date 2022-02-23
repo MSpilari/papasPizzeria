@@ -4,14 +4,15 @@ import { SideProfile } from '../SideProfile'
 import { AiOutlineMenu, AiFillCompass } from 'react-icons/ai'
 import { MdPlace } from 'react-icons/md'
 import { FaShoppingBag } from 'react-icons/fa'
-import { BsFillBellFill, BsFillHeartFill } from 'react-icons/bs'
+import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
 import LogoSmall from '../../assets/SmallLogo.png'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
+import { useSession } from 'next-auth/react'
 
 const MobileHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
-
+	const { data: session, status } = useSession()
 	const cartLength = useSelector(state => state.cart.length)
 
 	return (
@@ -40,14 +41,23 @@ const MobileHeader = () => {
 						priority
 					/>
 				</div>
-				<div className='relative mr-3 h-14 w-16 rounded-full overflow-hidden '>
-					<Image
-						sizes='50vw'
-						src='https://github.com/MSpilari.png'
-						layout='fill'
-						alt='User Pic'
-					/>
-				</div>
+
+				{status == 'authenticated' ? (
+					<div className='relative mr-3 h-14 w-16 rounded-full overflow-hidden '>
+						<Image
+							sizes='50vw'
+							src={session.user.image}
+							layout='fill'
+							alt='User Pic'
+						/>
+					</div>
+				) : (
+					<div className='relative mx-5 h-14 w-16 flex items-center justify-center'>
+						<i className='text-4xl text-slate-500'>
+							<BsPersonFill />
+						</i>
+					</div>
+				)}
 			</header>
 			<footer
 				className='fixed bottom-0 w-full flex items-center 
@@ -66,10 +76,13 @@ const MobileHeader = () => {
 				<Link href='/cart' passHref>
 					<button
 						className={`relative flex flex-col items-center justify-center text-2xl h-full w-full 
-					${cartLength == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
+											 ${cartLength == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
 					>
 						{cartLength != 0 && (
-							<div className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 rounded-full text-xs bg-guideRed text-white animate-pulse'>
+							<div
+								className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 
+															rounded-full text-xs bg-guideRed text-white animate-pulse'
+							>
 								{cartLength}
 							</div>
 						)}
