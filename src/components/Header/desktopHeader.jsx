@@ -80,13 +80,7 @@ const DesktopHeader = () => {
 						</i>
 					</button>
 				</nav>
-				{status == 'unauthenticated' || status == 'loading' ? (
-					<div className='relative mx-5 h-14 w-16 flex items-center justify-center'>
-						<i className='text-4xl text-slate-500'>
-							<BsPersonFill />
-						</i>
-					</div>
-				) : (
+				{status == 'authenticated' ? (
 					<div className='relative mx-5 h-14 w-16 rounded-full overflow-hidden'>
 						<Image
 							sizes='50vw'
@@ -94,6 +88,12 @@ const DesktopHeader = () => {
 							layout='fill'
 							alt='User Pic'
 						/>
+					</div>
+				) : (
+					<div className='relative mx-5 h-14 w-16 flex items-center justify-center'>
+						<i className='text-4xl text-slate-500'>
+							<BsPersonFill />
+						</i>
 					</div>
 				)}
 			</header>
