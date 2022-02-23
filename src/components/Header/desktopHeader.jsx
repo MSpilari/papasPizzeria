@@ -14,13 +14,13 @@ const DesktopHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 	const { data: session, status } = useSession()
 	const cartLength = useSelector(state => state.cart.length)
+
 	return (
 		<>
 			{isSideMenuOpen && <SideProfile />}
 			<header
 				className='hidden sticky top-0 w-full h-24 lg:flex items-center
-			border-b-2 border-b-slate-300 bg-white 
-			'
+									 border-b-2 border-b-slate-300 bg-white'
 			>
 				<button
 					onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
@@ -57,7 +57,10 @@ const DesktopHeader = () => {
 												 ${cartLength == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
 						>
 							{cartLength != 0 && (
-								<div className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 rounded-full text-xs bg-guideRed text-white animate-pulse'>
+								<div
+									className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 rounded-full 
+															  text-xs bg-guideRed text-white animate-pulse'
+								>
 									{cartLength}
 								</div>
 							)}
