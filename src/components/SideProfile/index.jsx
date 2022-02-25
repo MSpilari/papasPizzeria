@@ -9,8 +9,7 @@ import {
 	BsPersonFill
 } from 'react-icons/bs'
 import Image from 'next/image'
-import { signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 const SideProfile = () => {
 	const { data: session, status } = useSession()
@@ -111,7 +110,7 @@ const SideProfile = () => {
 				<button
 					className='flex items-center bg-guideOrange px-2 py-2 
 									 rounded-2xl text-white text-sm mt-auto mb-3 hover:opacity-90'
-					onClick={() => signOut()}
+					onClick={() => signOut({ callbackUrl: '/login' })}
 				>
 					<i className='text-black text-2xl mr-1'>
 						<BiLogOut />
@@ -119,17 +118,16 @@ const SideProfile = () => {
 					Log Out
 				</button>
 			) : (
-				<Link href='/login' passHref>
-					<button
-						className='flex items-center bg-guideOrange px-2 py-2 
+				<button
+					onClick={() => signIn()}
+					className='flex items-center bg-guideOrange px-2 py-2 
 									 rounded-2xl text-white text-sm mt-auto mb-3 hover:opacity-90'
-					>
-						<i className='text-black text-2xl mr-1'>
-							<BiLogIn />
-						</i>
-						Log In
-					</button>
-				</Link>
+				>
+					<i className='text-black text-2xl mr-1'>
+						<BiLogIn />
+					</i>
+					Log In
+				</button>
 			)}
 		</aside>
 	)
