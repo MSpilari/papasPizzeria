@@ -22,7 +22,17 @@ export default NextAuth({
 			session.accessToken = token.sub
 			return session
 		},
-		async signIn() {}
+		async signIn({ account, email, profile, user, credentials }) {
+			const res = await fetch('http://localhost:3000/api/users/addUser', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(user)
+			})
+			const data = await res.json()
+			return data.message
+		}
 	},
 	secret: process.env.NEXTAUTH_SECRET
 })
