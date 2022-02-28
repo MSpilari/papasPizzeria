@@ -1,12 +1,31 @@
+import { doc, setDoc } from 'firebase/firestore'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { AiOutlineHeart } from 'react-icons/ai'
 import Link from 'next/link'
+import { useState } from 'react'
+import { AiOutlineHeart } from 'react-icons/ai'
+import { db } from '../../../firebase'
 import { formatter } from '../../utils/currencyFormatter'
 
 const PizzaCard = ({ name, description, image, price, id }) => {
+	const { data: session } = useSession()
+
+	const [hasLiked, setHasLiked] = useState(false)
+
+	const likePizza = async () => {
+		/* This is a way to communicate with firebase only on the client side. 
+		Remember to expose environment variables in two ways: 
+		 - the usual way "NODE_ENV" 
+		 - for Next, following the "NEXT_PUBLIC_NODE_ENV" pattern. 
+		So you can use the FRONT or BACK approach.  */
+		await setDoc(doc(db, 'users', session.user.firebaseID, 'likes', id), {
+			name
+		})
+	}
+
 	return (
-		<Link href={`/pizza/${id}`} passHref>
-			<div className='w-[90%] cursor-pointer max-w-xs h-[200px] flex flex-col items-center border-2 border-slate-300 rounded-3xl overflow-hidden my-2 lg:mx-auto'>
+		<div className='w-[90%] max-w-xs h-[200px] flex flex-col items-center border-2 border-slate-300 rounded-3xl overflow-hidden my-2 lg:mx-auto'>
+			<Link href={`/pizza/${id}`} passHref>
 				<div className='relative w-full h-full'>
 					<Image
 						src={image}
@@ -16,23 +35,23 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 						alt='Pizza Image'
 					/>
 				</div>
-				<div className=' w-[85%] mx-auto my-1 flex items-center justify-between'>
-					<span className='flex items-center border-2 border-slate-300 rounded-3xl px-1 py-1 font-bold'>
-						{' '}
-						<span className='text-guideOrange text-lg mr-1'>
-							{formatter.format(price)}
-						</span>
+			</Link>
+			<div className=' w-[85%] mx-auto my-1 flex items-center justify-between'>
+				<span className='flex items-center border-2 border-slate-300 rounded-3xl px-1 py-1 font-bold'>
+					{' '}
+					<span className='text-guideOrange text-lg mr-1'>
+						{formatter.format(price)}
 					</span>
-					<button className='text-2xl'>
-						<AiOutlineHeart />
-					</button>
-				</div>
-				<div className='w-[90%] flex flex-col flex-nowrap mx-auto'>
-					<p className='text-sm mb-1 truncate'>{name}</p>
-					<p className='text-xs truncate text-gray-400'>{description}</p>
-				</div>
+				</span>
+				<button onClick={() => likePizza()} className='text-2xl'>
+					<AiOutlineHeart />
+				</button>
 			</div>
-		</Link>
+			<div className='w-[90%] flex flex-col flex-nowrap mx-auto'>
+				<p className='text-sm mb-1 truncate'>{name}</p>
+				<p className='text-xs truncate text-gray-400'>{description}</p>
+			</div>
+		</div>
 	)
 }
 
