@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SideProfile } from '../SideProfile'
 import { AiOutlineMenu, AiFillCompass } from 'react-icons/ai'
 import { MdPlace } from 'react-icons/md'
@@ -9,11 +9,22 @@ import LogoSmall from '../../assets/SmallLogo.png'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { useSession } from 'next-auth/react'
+import { collection, onSnapshot } from 'firebase/firestore'
+import { db } from '../../../firebase'
 
 const MobileHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 	const { data: session, status } = useSession()
+	const [likesCounter, setLikesCounter] = useState(0)
 	const cartLength = useSelector(state => state.cart.length)
+
+	useEffect(() => {
+		session &&
+			onSnapshot(
+				collection(db, 'users', session.user.firebaseID, 'likes'),
+				snapshot => setLikesCounter(snapshot.docs.length)
+			)
+	}, [session])
 
 	return (
 		<>
@@ -91,7 +102,18 @@ const MobileHeader = () => {
 						</i>
 					</button>
 				</Link>
-				<button className='flex items-center justify-center text-2xl h-full w-full text-slate-500'>
+				<button
+					className={`relative flex flex-col items-center justify-center text-2xl h-full w-full 
+											 ${likesCounter == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
+				>
+					{likesCounter != 0 && (
+						<div
+							className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 
+															rounded-full text-xs bg-guideRed text-white animate-pulse'
+						>
+							{likesCounter}
+						</div>
+					)}
 					<i>
 						<BsFillHeartFill />
 					</i>
