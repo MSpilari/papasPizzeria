@@ -2,19 +2,29 @@ import { AiFillCompass, AiOutlineMenu } from 'react-icons/ai'
 import Image from 'next/image'
 import { SideProfile } from '../SideProfile'
 import LogoSmall from '../../assets/SmallLogo.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaShoppingBag } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
 import { MdPlace } from 'react-icons/md'
 import { useSession } from 'next-auth/react'
+import { collection, onSnapshot } from 'firebase/firestore'
+import { db } from '../../../firebase'
 
 const DesktopHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 	const { data: session, status } = useSession()
+	const [likes, setLikes] = useState(0)
 	const cartLength = useSelector(state => state.cart.length)
 
+	useEffect(() => {
+		session &&
+			onSnapshot(
+				collection(db, 'users', session.user.firebaseID, 'likes'),
+				snapshot => setLikes(snapshot.docs.length)
+			)
+	}, [session])
 	return (
 		<>
 			{isSideMenuOpen && <SideProfile />}
@@ -69,7 +79,18 @@ const DesktopHeader = () => {
 							</i>
 						</button>
 					</Link>
-					<button className='flex items-center justify-center text-2xl h-full w-full text-slate-500'>
+					<button
+						className={`relative flex flex-col items-center justify-center text-2xl h-full w-full 
+												 ${likes == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
+					>
+						{likes != 0 && (
+							<div
+								className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 rounded-full 
+															  text-xs bg-guideRed text-white animate-pulse'
+							>
+								{likes}
+							</div>
+						)}
 						<i>
 							<BsFillHeartFill />
 						</i>
