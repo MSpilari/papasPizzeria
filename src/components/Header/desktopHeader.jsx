@@ -19,11 +19,15 @@ const DesktopHeader = () => {
 	const cartLength = useSelector(state => state.cart.length)
 
 	useEffect(() => {
+		let unmounted = false
 		session &&
+			!unmounted &&
 			onSnapshot(
 				collection(db, 'users', session.user.firebaseID, 'likes'),
 				snapshot => setLikesCounter(snapshot.docs.length)
 			)
+		// Prevent a memory leak
+		return () => (unmounted = true)
 	}, [session])
 	return (
 		<>

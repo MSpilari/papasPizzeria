@@ -28,11 +28,15 @@ const BackLikeImage = ({ image }) => {
 	}
 
 	useEffect(() => {
+		let unmounted = false
 		session &&
+			!unmounted &&
 			onSnapshot(
 				collection(db, 'users', session.user.firebaseID, 'likes'),
 				snapshot => setLikes(snapshot.docs.map(like => like.data()))
 			)
+		// Prevent a memory leak
+		return () => (unmounted = true)
 	}, [session])
 
 	useEffect(() => {

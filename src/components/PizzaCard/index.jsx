@@ -33,11 +33,15 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 	}
 
 	useEffect(() => {
+		let unmounted = false
 		session &&
+			!unmounted &&
 			onSnapshot(
 				collection(db, 'users', session.user.firebaseID, 'likes'),
 				snapshot => setLikes(snapshot.docs.map(like => like.data()))
 			)
+		// Using this to prevent a memory leak
+		return () => (unmounted = true)
 	}, [session])
 
 	useEffect(() => {
