@@ -7,7 +7,7 @@ import { Optionals } from './Optionals'
 import { TitlePriceQtyDesc } from './TitlePriceQtyDesc'
 
 const PizzaDetails = ({ pizzaData }) => {
-	const { image, description, likes, name, optional, price } = pizzaData
+	const { image, description, name, optional, price } = pizzaData
 	const [quantity, setQuantity] = useState(1)
 	const [addOns, setAddOns] = useState([])
 
