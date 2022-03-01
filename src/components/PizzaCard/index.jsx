@@ -47,7 +47,7 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 	return (
 		<div className='w-[90%] max-w-xs h-[200px] flex flex-col items-center border-2 border-slate-300 rounded-3xl overflow-hidden my-2 lg:mx-auto'>
 			<Link href={`/pizza/${id}`} passHref>
-				<div className='relative w-full h-full'>
+				<div className='relative cursor-pointer w-full h-full'>
 					<Image
 						src={image}
 						objectFit='cover'
@@ -68,7 +68,7 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 					disabled={session === null}
 					onClick={() => likePizza()}
 					className={`text-2xl text-red-500 border-2 rounded-lg
-					disabled:text-gray-400 disabled:border-gray-400`}
+					disabled:text-gray-400 disabled:border-gray-400 disabled:cursor-not-allowed`}
 				>
 					{hasLiked ? <AiFillHeart /> : <AiOutlineHeart />}
 				</button>
