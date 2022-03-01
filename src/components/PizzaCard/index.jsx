@@ -24,7 +24,7 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 		 - the usual way "NODE_ENV" 
 		 - for Next, following the "NEXT_PUBLIC_NODE_ENV" pattern. 
 		So you can use the FRONT or BACK approach.  */
-		hasLiked
+		session && hasLiked
 			? await deleteDoc(doc(db, 'users', session.user.firebaseID, 'likes', id))
 			: await setDoc(doc(db, 'users', session.user.firebaseID, 'likes', id), {
 					name,
@@ -64,12 +64,13 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 						{formatter.format(price)}
 					</span>
 				</span>
-				<button onClick={() => likePizza()} className='text-2xl'>
-					{hasLiked ? (
-						<AiFillHeart className='text-red-500' />
-					) : (
-						<AiOutlineHeart />
-					)}
+				<button
+					disabled={session === null}
+					onClick={() => likePizza()}
+					className={`text-2xl text-red-500 border-2 rounded-lg
+					disabled:text-gray-400 disabled:border-gray-400`}
+				>
+					{hasLiked ? <AiFillHeart /> : <AiOutlineHeart />}
 				</button>
 			</div>
 			<div className='w-[90%] flex flex-col flex-nowrap mx-auto'>
