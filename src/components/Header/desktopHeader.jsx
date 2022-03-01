@@ -15,14 +15,14 @@ import { db } from '../../../firebase'
 const DesktopHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 	const { data: session, status } = useSession()
-	const [likes, setLikes] = useState(0)
+	const [likesCounter, setLikesCounter] = useState(0)
 	const cartLength = useSelector(state => state.cart.length)
 
 	useEffect(() => {
 		session &&
 			onSnapshot(
 				collection(db, 'users', session.user.firebaseID, 'likes'),
-				snapshot => setLikes(snapshot.docs.length)
+				snapshot => setLikesCounter(snapshot.docs.length)
 			)
 	}, [session])
 	return (
@@ -81,14 +81,14 @@ const DesktopHeader = () => {
 					</Link>
 					<button
 						className={`relative flex flex-col items-center justify-center text-2xl h-full w-full 
-												 ${likes == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
+												 ${likesCounter == 0 ? 'text-slate-500' : 'text-guideOrange'} `}
 					>
-						{likes != 0 && (
+						{likesCounter != 0 && (
 							<div
 								className='absolute top-[50%] right-[30%] md:right-[40%] w-4 h-4 rounded-full 
 															  text-xs bg-guideRed text-white animate-pulse'
 							>
-								{likes}
+								{likesCounter}
 							</div>
 						)}
 						<i>
