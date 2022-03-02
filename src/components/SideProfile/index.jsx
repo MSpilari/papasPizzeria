@@ -10,6 +10,7 @@ import {
 } from 'react-icons/bs'
 import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { UserAvatar } from '../UI/UserAvatar'
 
 const SideProfile = () => {
 	const { data: session, status } = useSession()
@@ -18,22 +19,7 @@ const SideProfile = () => {
 			className='w-[70%] md:w-[40%] z-20 absolute top-24 h-[calc(100%-96px)] 
     						 flex flex-col items-center bg-white'
 		>
-			{status == 'authenticated' ? (
-				<div className='relative mt-3 h-20 w-20 rounded-full overflow-hidden'>
-					<Image
-						sizes='50vw'
-						src={session.user.image}
-						layout='fill'
-						alt='User Pic'
-					/>
-				</div>
-			) : (
-				<div className='relative mt-3 h-20 w-20 flex items-center justify-center'>
-					<i className='text-4xl text-slate-500'>
-						<BsPersonFill />
-					</i>
-				</div>
-			)}
+			<UserAvatar sideProfile />
 
 			<h1 className='text-sm w-full text-center truncate'>
 				{status == 'authenticated' ? session.user.name : 'User Name'}

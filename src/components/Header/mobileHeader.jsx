@@ -1,10 +1,9 @@
 import { collection, onSnapshot } from 'firebase/firestore'
 import { useSession } from 'next-auth/react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { AiFillCompass } from 'react-icons/ai'
-import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
+import { BsFillBellFill, BsFillHeartFill } from 'react-icons/bs'
 import { FaShoppingBag } from 'react-icons/fa'
 import { MdPlace } from 'react-icons/md'
 import { useSelector } from 'react-redux'
@@ -12,6 +11,7 @@ import { db } from '../../../firebase'
 import { SideProfile } from '../SideProfile'
 import { LogoPapasPizzeria } from '../UI/LogoPapasPizzeria'
 import { SideMenuButton } from '../UI/SideMenuButton'
+import { UserAvatar } from '../UI/UserAvatar'
 
 const MobileHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
@@ -46,22 +46,7 @@ const MobileHeader = () => {
 
 				<LogoPapasPizzeria />
 
-				{status == 'authenticated' ? (
-					<div className='relative mr-3 h-14 w-16 rounded-full overflow-hidden '>
-						<Image
-							sizes='50vw'
-							src={session.user.image}
-							layout='fill'
-							alt='User Pic'
-						/>
-					</div>
-				) : (
-					<div className='relative mx-5 h-14 w-16 flex items-center justify-center'>
-						<i className='text-4xl text-slate-500'>
-							<BsPersonFill />
-						</i>
-					</div>
-				)}
+				<UserAvatar />
 			</header>
 			<footer
 				className='fixed bottom-0 w-full flex items-center 
@@ -122,3 +107,4 @@ const MobileHeader = () => {
 }
 
 export { MobileHeader }
+
