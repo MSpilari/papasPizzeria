@@ -9,8 +9,8 @@ import { FaShoppingBag } from 'react-icons/fa'
 import { MdPlace } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { db } from '../../../firebase'
-import LogoSmall from '../../assets/SmallLogo.png'
 import { SideProfile } from '../SideProfile'
+import { LogoPapasPizzeria } from '../UI/LogoPapasPizzeria'
 import { SideMenuButton } from '../UI/SideMenuButton'
 
 const MobileHeader = () => {
@@ -44,16 +44,7 @@ const MobileHeader = () => {
 					setIsSideMenuOpen={setIsSideMenuOpen}
 				/>
 
-				<div className='relative h-full w-56'>
-					<Image
-						layout='fill'
-						objectFit='contain'
-						sizes='50vw'
-						src={LogoSmall}
-						alt='Papa`s Pizzeria Logo'
-						priority
-					/>
-				</div>
+				<LogoPapasPizzeria />
 
 				{status == 'authenticated' ? (
 					<div className='relative mr-3 h-14 w-16 rounded-full overflow-hidden '>

@@ -9,8 +9,8 @@ import { FaShoppingBag } from 'react-icons/fa'
 import { MdPlace } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { db } from '../../../firebase'
-import LogoSmall from '../../assets/SmallLogo.png'
 import { SideProfile } from '../SideProfile'
+import { LogoPapasPizzeria } from '../UI/LogoPapasPizzeria'
 import { SideMenuButton } from '../UI/SideMenuButton'
 
 const DesktopHeader = () => {
@@ -42,16 +42,8 @@ const DesktopHeader = () => {
 					setIsSideMenuOpen={setIsSideMenuOpen}
 				/>
 
-				<div className='relative h-full w-56 ml-[30%]'>
-					<Image
-						layout='fill'
-						objectFit='contain'
-						sizes='50vw'
-						src={LogoSmall}
-						alt='Papa`s Pizzeria Logo'
-						priority
-					/>
-				</div>
+				<LogoPapasPizzeria />
+
 				<nav className='flex items-center w-56 ml-auto'>
 					<button className='flex items-center justify-center text-2xl h-full w-full text-slate-500'>
 						<i>
