@@ -1,15 +1,9 @@
-import { FaNewspaper } from 'react-icons/fa'
-import { FiSettings, FiHelpCircle } from 'react-icons/fi'
-import { BiLogOut, BiLogIn } from 'react-icons/bi'
-import { AiFillMessage } from 'react-icons/ai'
-import {
-	BsFillPersonFill,
-	BsPinAngleFill,
-	BsCash,
-	BsPersonFill
-} from 'react-icons/bs'
-import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { AiFillMessage } from 'react-icons/ai'
+import { BiLogIn, BiLogOut } from 'react-icons/bi'
+import { BsCash, BsFillPersonFill, BsPinAngleFill } from 'react-icons/bs'
+import { FaNewspaper } from 'react-icons/fa'
+import { FiHelpCircle, FiSettings } from 'react-icons/fi'
 import { UserAvatar } from '../UI/UserAvatar'
 
 const SideProfile = () => {
