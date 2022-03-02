@@ -17,7 +17,7 @@ const Menu = ({ data }) => {
 }
 
 export async function getServerSideProps() {
-	const res = await fetch('http://localhost:3000/api/pizzas')
+	const res = await fetch(`${process.env.NEXTAUTH_URL}/api/pizzas`)
 
 	const data = await res.json()
 

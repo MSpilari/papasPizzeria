@@ -15,20 +15,23 @@ export default NextAuth({
 	},
 	callbacks: {
 		async session({ session, token, user }) {
-			const res = await fetch('http://localhost:3000/api/users/findUserId', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ email: session.user.email })
-			})
+			const res = await fetch(
+				`${process.env.NEXTAUTH_URL}/api/users/findUserId`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ email: session.user.email })
+				}
+			)
 
 			const data = await res.json()
 			session.user.firebaseID = data.userID
 			return session
 		},
 		async signIn({ account, email, profile, user, credentials }) {
-			const res = await fetch('http://localhost:3000/api/users/addUser', {
+			const res = await fetch(`${process.env.NEXTAUTH_URL}/api/users/addUser`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

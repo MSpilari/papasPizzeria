@@ -10,7 +10,9 @@ const PizzaInfo = () => {
 		const [_, pizzaID] = document.location.pathname.split('/pizza/')
 
 		async function fetchData() {
-			const res = await fetch(`http://localhost:3000/api/pizzas/${pizzaID}`)
+			const res = await fetch(
+				`${process.env.NEXTAUTH_URL}/api/pizzas/${pizzaID}`
+			)
 			const data = await res.json()
 			return setPizzaData(data)
 		}
