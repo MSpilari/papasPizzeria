@@ -1,16 +1,17 @@
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { SideProfile } from '../SideProfile'
-import { AiOutlineMenu, AiFillCompass } from 'react-icons/ai'
-import { MdPlace } from 'react-icons/md'
-import { FaShoppingBag } from 'react-icons/fa'
-import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
-import LogoSmall from '../../assets/SmallLogo.png'
-import Link from 'next/link'
-import { useSelector } from 'react-redux'
-import { useSession } from 'next-auth/react'
 import { collection, onSnapshot } from 'firebase/firestore'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { AiFillCompass } from 'react-icons/ai'
+import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
+import { FaShoppingBag } from 'react-icons/fa'
+import { MdPlace } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 import { db } from '../../../firebase'
+import LogoSmall from '../../assets/SmallLogo.png'
+import { SideProfile } from '../SideProfile'
+import { SideMenuButton } from '../UI/SideMenuButton'
 
 const MobileHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
@@ -38,14 +39,11 @@ const MobileHeader = () => {
 			border-b-2 border-b-slate-300 bg-white lg:hidden
 			'
 			>
-				<button
-					onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
-					className='text-lg ml-3'
-				>
-					<i>
-						<AiOutlineMenu />
-					</i>
-				</button>
+				<SideMenuButton
+					isSideMenuOpen={isSideMenuOpen}
+					setIsSideMenuOpen={setIsSideMenuOpen}
+				/>
+
 				<div className='relative h-full w-56'>
 					<Image
 						layout='fill'

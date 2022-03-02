@@ -1,16 +1,17 @@
-import { AiFillCompass, AiOutlineMenu } from 'react-icons/ai'
-import Image from 'next/image'
-import { SideProfile } from '../SideProfile'
-import LogoSmall from '../../assets/SmallLogo.png'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { FaShoppingBag } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
-import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
-import { MdPlace } from 'react-icons/md'
-import { useSession } from 'next-auth/react'
 import { collection, onSnapshot } from 'firebase/firestore'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { AiFillCompass } from 'react-icons/ai'
+import { BsFillBellFill, BsFillHeartFill, BsPersonFill } from 'react-icons/bs'
+import { FaShoppingBag } from 'react-icons/fa'
+import { MdPlace } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 import { db } from '../../../firebase'
+import LogoSmall from '../../assets/SmallLogo.png'
+import { SideProfile } from '../SideProfile'
+import { SideMenuButton } from '../UI/SideMenuButton'
 
 const DesktopHeader = () => {
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
@@ -36,14 +37,11 @@ const DesktopHeader = () => {
 				className='hidden sticky top-0 w-full h-24 lg:flex items-center
 									 border-b-2 border-b-slate-300 bg-white'
 			>
-				<button
-					onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
-					className='text-lg ml-5'
-				>
-					<i>
-						<AiOutlineMenu />
-					</i>
-				</button>
+				<SideMenuButton
+					isSideMenuOpen={isSideMenuOpen}
+					setIsSideMenuOpen={setIsSideMenuOpen}
+				/>
+
 				<div className='relative h-full w-56 ml-[30%]'>
 					<Image
 						layout='fill'
