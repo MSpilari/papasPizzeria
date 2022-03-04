@@ -7,14 +7,24 @@ const Welcome = ({ providers }) => {
 	return (
 		<div className='w-full h-full loginBgImage bg-cover '>
 			<div className='w-full h-full flex flex-col items-center bg-[rgba(0,0,0,0.6)]'>
-				<Link href='/menu' passHref>
+				<div className='w-full flex'>
 					<button
 						className='my-3 ml-auto mr-4 
 						bg-white rounded-3xl px-5 py-2 text-sm text-guideOrange font-bold'
+						title='Sign in as Admin !'
 					>
-						Menu
+						Admin
 					</button>
-				</Link>
+					<Link href='/menu' passHref>
+						<button
+							className='my-3 mr-4 
+						bg-white rounded-3xl px-5 py-2 text-sm text-guideOrange font-bold'
+							title='Go to the Menu'
+						>
+							Menu
+						</button>
+					</Link>
+				</div>
 				<h1 className='mt-10 w-[90%] mx-auto text-white flex flex-col text-3xl'>
 					Welcome to
 					<span className='my-2 text-guideOrange text-5xl font-bold'>
@@ -42,6 +52,7 @@ const Welcome = ({ providers }) => {
 								className='w-full mr-2 flex items-center justify-center px-4 py-2 
 												 bg-white text-sm text-guideOrange 
 													 font-bold rounded-3xl lg:max-w-xs'
+								title={`Sign in with your ${provider.name} account`}
 							>
 								{provider.name === 'Google' && (
 									<i className='mr-1 text-3xl'>
