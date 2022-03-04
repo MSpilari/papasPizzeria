@@ -1,17 +1,23 @@
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { useState } from 'react'
 import { FaFacebookSquare } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
+import { AdminForm } from '../AdminForm'
 
 const Welcome = ({ providers }) => {
+	const [isAdminFormOpen, setIsAdminFormOpen] = useState(false)
+
 	return (
 		<div className='w-full h-full loginBgImage bg-cover '>
+			{isAdminFormOpen && <AdminForm setIsAdminFormOpen={setIsAdminFormOpen} />}
 			<div className='w-full h-full flex flex-col items-center bg-[rgba(0,0,0,0.6)]'>
 				<div className='w-full flex'>
 					<button
 						className='my-3 ml-auto mr-4 
 						bg-white rounded-3xl px-5 py-2 text-sm text-guideOrange font-bold'
 						title='Sign in as Admin !'
+						onClick={() => setIsAdminFormOpen(true)}
 					>
 						Admin
 					</button>
