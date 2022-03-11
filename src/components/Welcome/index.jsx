@@ -15,12 +15,13 @@ const Welcome = ({ providers }) => {
 				<div className='w-full flex'>
 					<button
 						className='my-3 ml-auto mr-4 
-						bg-white rounded-3xl px-5 py-2 text-sm text-guideOrange font-bold'
+										 bg-white rounded-3xl px-5 py-2 text-sm text-guideOrange font-bold'
 						title='Sign in as Admin !'
 						onClick={() => setIsAdminFormOpen(true)}
 					>
 						Admin
 					</button>
+
 					<Link href='/menu' passHref>
 						<button
 							className='my-3 mr-4 
@@ -51,23 +52,28 @@ const Welcome = ({ providers }) => {
 					</div>
 
 					<div className='flex w-full items-center justify-between lg:justify-around'>
-						{Object.values(providers).map(provider => (
-							<button
-								key={provider.name}
-								onClick={() => signIn(provider.id, { callbackUrl: '/menu' })}
-								className='w-full mr-2 flex items-center justify-center px-4 py-2 
+						{Object.values(providers).map(
+							provider =>
+								provider.name != 'Credentials' && (
+									<button
+										key={provider.name}
+										onClick={() =>
+											signIn(provider.id, { callbackUrl: '/menu' })
+										}
+										className='w-full mr-2 flex items-center justify-center px-4 py-2 
 												 bg-white text-sm text-guideOrange 
 													 font-bold rounded-3xl lg:max-w-xs'
-								title={`Sign in with your ${provider.name} account`}
-							>
-								{provider.name === 'Google' && (
-									<i className='mr-1 text-3xl'>
-										<FcGoogle />
-									</i>
-								)}
-								{provider.name}
-							</button>
-						))}
+										title={`Sign in with your ${provider.name} account`}
+									>
+										{provider.name === 'Google' && (
+											<i className='mr-1 text-3xl'>
+												<FcGoogle />
+											</i>
+										)}
+										{provider.name}
+									</button>
+								)
+						)}
 
 						<button
 							className='w-full mr-2 flex items-center justify-center px-4 py-2 
