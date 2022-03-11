@@ -8,8 +8,6 @@ const AdminForm = ({ setIsAdminFormOpen }) => {
 	const emailInputRef = useRef()
 	const passwordInputRef = useRef()
 
-	const adminLogin = async () => {}
-
 	return (
 		<div className='absolute top-0 w-full h-full z-10 bg-[rgba(0,0,0,0.9)] flex items-center justify-center'>
 			<section
