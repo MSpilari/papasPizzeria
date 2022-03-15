@@ -1,10 +1,9 @@
-import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
+import { doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { useEffect, useRef, useState } from 'react'
 import { db } from '../../../firebase'
-import { PizzaAdmin } from './PizzaAdmin'
+import { AllPizzas } from './components/AllPizzas'
 
 const PizzasTaxes = () => {
-	const [allPizzas, setAllPizzas] = useState([])
 	const [currentDeliveryTax, setCurrentDeliveryTax] = useState(0)
 	const [currentTax, setCurrentTax] = useState(0)
 	const [deliveryTax, setDeliveryTax] = useState(0)
@@ -34,27 +33,10 @@ const PizzasTaxes = () => {
 		)
 	}, [])
 
-	useEffect(() => {
-		onSnapshot(collection(db, 'pizzas'), snapshot =>
-			setAllPizzas(
-				snapshot.docs.map(pizza => {
-					return {
-						firebaseId: pizza.id,
-						...pizza.data()
-					}
-				})
-			)
-		)
-	}, [])
-
 	return (
 		<div className='w-full h-full flex flex-col'>
-			<section className='w-full h-full my-1'>
-				<h1 className='text-center'>All Pizzas</h1>
-				{allPizzas.map(pizza => (
-					<PizzaAdmin key={pizza.firebaseId} itemInfo={pizza} />
-				))}
-			</section>
+			<AllPizzas />
+
 			<section className='w-[90%] mx-auto flex flex-col border-2 my-1 border-slate-200 rounded-md'>
 				<h1 className='text-center'>Taxes</h1>
 				<p>Current delivery Tax : {currentDeliveryTax.deliveryTax}</p>
