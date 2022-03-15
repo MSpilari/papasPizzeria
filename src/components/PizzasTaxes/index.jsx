@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react'
-import { collection, onSnapshot } from 'firebase/firestore'
+import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
 
 import { db } from '../../../firebase'
 import { PizzaAdmin } from './PizzaAdmin'
 
 const PizzasTaxes = () => {
 	const [allPizzas, setAllPizzas] = useState([])
+	const [deliveryTax, setDeliveryTax] = useState(0)
+	const [tax, setTax] = useState(0)
+
+	const handleTaxes = async (taxId, newTax) => {
+		return await setDoc(doc(db, 'taxes', taxId), { [taxId]: newTax })
+	}
 
 	useEffect(() => {
 		onSnapshot(collection(db, 'pizzas'), snapshot =>
@@ -30,27 +36,37 @@ const PizzasTaxes = () => {
 			</section>
 			<section className='w-[90%] mx-auto flex flex-col border-2 my-1 border-slate-200 rounded-md'>
 				<h1 className='text-center'>Taxes</h1>
-				<p>Current delivery Tax : 5</p>
+				<p>Current delivery Tax : {deliveryTax}</p>
 				<p className='flex '>
 					Set new delivery tax ?{' '}
 					<input
 						className='border-2 border-slate-300 outline-none rounded-lg'
 						type='number'
 						name='delivery tax'
+						onChange={e => setDeliveryTax(e.target.value)}
 					/>
-					<button className='px-2 border-2 border-slate-300 rounded-lg ml-1'>
+					<button
+						disabled={deliveryTax == ''}
+						onClick={() => handleTaxes('deliveryTax', deliveryTax)}
+						className='px-2 border-2 border-slate-300 rounded-lg ml-1 disabled:text-gray-300 disabled:cursor-not-allowed'
+					>
 						Ok
 					</button>
 				</p>
-				<p>Current tax : 10</p>
+				<p>Current tax : {tax}</p>
 				<p>
 					Set new tax ?{' '}
 					<input
 						className='border-2 border-slate-300 outline-none rounded-lg'
 						type='number'
 						name='tax'
+						onChange={e => setTax(e.target.value)}
 					/>{' '}
-					<button className='px-2 border-2 border-slate-300 rounded-lg ml-1'>
+					<button
+						disabled={tax == ''}
+						onClick={() => handleTaxes('tax', tax)}
+						className='px-2 border-2 border-slate-300 rounded-lg ml-1 disabled:text-gray-300 disabled:cursor-not-allowed'
+					>
 						Ok
 					</button>
 				</p>
