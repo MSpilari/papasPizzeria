@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import { db, storage } from '../../../../../firebase'
+import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
 const AddNewPizzaForm = () => {
 	const [pizzaInfo, setPizzaInfo] = useState({})
@@ -30,6 +33,20 @@ const AddNewPizzaForm = () => {
 		stateChanger(prevState => {
 			return { ...prevState, [name]: value }
 		})
+	}
+
+	async function uploadPizza() {
+		const docRef = await addDoc(collection(db, 'pizzas'), pizzaInfo)
+
+		const imageRef = ref(storage, `pizzas/${docRef.id}/image`)
+
+		await uploadString(imageRef, selectedImage, 'data_url').then(async () => {
+			const downloadImgUrl = await getDownloadURL(imageRef)
+			await updateDoc(doc(db, 'pizzas', docRef.id), {
+				image: downloadImgUrl
+			})
+		})
+		return setSelectedImage('')
 	}
 
 	return (
@@ -153,6 +170,7 @@ const AddNewPizzaForm = () => {
 								optionals
 							}
 						})
+						return uploadPizza()
 					}}
 				>
 					Send Pizza
