@@ -1,9 +1,8 @@
-import Image from 'next/image'
 import { useRef, useState } from 'react'
-import { AiFillCamera } from 'react-icons/ai'
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
-import { db, storage } from '../../../../../firebase'
-import { getDownloadURL, ref, uploadString } from 'firebase/storage'
+import { ImageInput } from './ImageInput'
+import { NameDescPriceInputs } from './NameDescPriceInputs'
+import { Optionals } from './Optionals'
+import { SubmitButton } from './SubmitButton'
 
 const AddNewPizzaForm = () => {
 	const [pizzaInfo, setPizzaInfo] = useState({})
@@ -11,170 +10,36 @@ const AddNewPizzaForm = () => {
 	const [newOptionals, setNewOptionals] = useState({})
 	const [selectedImage, setSelectedImage] = useState('')
 
-	const ingredientRef = useRef(null)
-	const optPriceRef = useRef(null)
-	const imageButtonRef = useRef(null)
-
-	function addImage(event) {
-		const reader = new FileReader()
-
-		if (event.target.files.item(0)) {
-			reader.readAsDataURL(event.target.files[0])
-		}
-
-		reader.onload = readerEvent => {
-			setSelectedImage(String(readerEvent.target.result))
-		}
-	}
-
-	function handleInputChanges(event, stateChanger) {
-		const { name, value } = event.target
-
-		stateChanger(prevState => {
-			return { ...prevState, [name]: value }
-		})
-	}
-
-	async function uploadPizza() {
-		const docRef = await addDoc(collection(db, 'pizzas'), pizzaInfo)
-
-		const imageRef = ref(storage, `pizzas/${docRef.id}/image`)
-
-		await uploadString(imageRef, selectedImage, 'data_url').then(async () => {
-			const downloadImgUrl = await getDownloadURL(imageRef)
-			await updateDoc(doc(db, 'pizzas', docRef.id), {
-				image: downloadImgUrl
-			})
-		})
-		return setSelectedImage('')
-	}
+	const formRef = useRef(null)
 
 	return (
 		<section className='w-[90%] mx-auto border-2 border-slate-200 rounded-lg'>
 			<h1 className='text-center'>Add a new Pizza</h1>
-			<form className='flex flex-col w-[90%] mx-auto'>
-				<div className='w-[300px] h-[200px] relative border-2 border-slate-300 flex items-center justify-center rounded-lg overflow-hidden'>
-					{selectedImage ? (
-						<Image
-							src={selectedImage}
-							alt='Pizza Image'
-							layout='fill'
-							sizes='50vw'
-							objectFit='fill'
-							className='w-full h-full'
-							onClick={() => {
-								if (imageButtonRef.current) {
-									imageButtonRef.current.value = ''
-									setSelectedImage('')
-								}
-							}}
-						/>
-					) : (
-						<button
-							type='button'
-							className='text-2xl'
-							onClick={() => imageButtonRef.current.click()}
-						>
-							<AiFillCamera />
-						</button>
-					)}
-				</div>
-				<input
-					ref={imageButtonRef}
-					type='file'
-					name='image'
-					hidden
-					onChange={e => addImage(e)}
-				/>
-				<div className='flex items-center my-1'>
-					<label htmlFor='name'>Name:</label>
-					<input
-						className='border-2 border-slate-200 outline-none rounded-lg'
-						type='text'
-						name='name'
-						onChange={e => handleInputChanges(e, setPizzaInfo)}
-					/>
-				</div>
-				<div className='flex items-center my-1'>
-					<label htmlFor='description'>Description:</label>
-					<textarea
-						className='border-2 border-slate-200 outline-none rounded-lg resize-none'
-						name='description'
-						onChange={e => handleInputChanges(e, setPizzaInfo)}
-					/>
-				</div>
-				<div className='flex items-center my-1'>
-					<label htmlFor='price'>Price:</label>
-					<input
-						className='border-2 border-slate-200 outline-none rounded-lg'
-						type='text'
-						name='price'
-						onChange={e => handleInputChanges(e, setPizzaInfo)}
-					/>
-				</div>
-				<div className='my-1'>
-					<h4>Optionals</h4>
-					<ul className='w-[95%] mx-auto'>
-						{optionals.map((opt, index) => (
-							<li key={index} className='flex my-1'>
-								<p>Ingredient: {opt.ingredient}</p>
-								<p className='ml-2'>optPrice: {opt.optPrice}</p>
-							</li>
-						))}
-					</ul>
 
-					<label htmlFor='ingredient'>Ingredient:</label>
-					<input
-						ref={ingredientRef}
-						className='border-2 border-slate-200 outline-none rounded-lg'
-						type='text'
-						name='ingredient'
-						onChange={e => handleInputChanges(e, setNewOptionals)}
-					/>
-					<label htmlFor='optPrice'>optPrice:</label>
-					<input
-						ref={optPriceRef}
-						className='border-2 border-slate-200 outline-none rounded-lg'
-						type='number'
-						name='optPrice'
-						onChange={e => handleInputChanges(e, setNewOptionals)}
-					/>
-					<button
-						className='px-2 border-2 border-slate-300 rounded-lg ml-1 disabled:text-gray-300 disabled:cursor-not-allowed'
-						disabled={
-							optPriceRef.current &&
-							ingredientRef.current &&
-							(optPriceRef.current.value == '' ||
-								ingredientRef.current.value == '')
-						}
-						type='button'
-						onClick={() => {
-							setOptionals(prevState => [...prevState, newOptionals])
-							if (optPriceRef.current && ingredientRef.current) {
-								optPriceRef.current.value = ''
-								ingredientRef.current.value = ''
-							}
-							setNewOptionals({})
-						}}
-					>
-						Ok
-					</button>
-				</div>
-				<button
-					type='submit'
-					onClick={e => {
-						e.preventDefault()
-						setPizzaInfo(prevState => {
-							return {
-								...prevState,
-								optionals
-							}
-						})
-						return uploadPizza()
-					}}
-				>
-					Send Pizza
-				</button>
+			<form ref={formRef} className='flex flex-col w-[90%] mx-auto'>
+				<ImageInput
+					selectedImage={selectedImage}
+					setSelectedImage={setSelectedImage}
+				/>
+
+				<NameDescPriceInputs setPizzaInfo={setPizzaInfo} />
+
+				<Optionals
+					optionals={optionals}
+					setOptionals={setOptionals}
+					newOptionals={newOptionals}
+					setNewOptionals={setNewOptionals}
+				/>
+
+				<SubmitButton
+					optionals={optionals}
+					setOptionals={setOptionals}
+					pizzaInfo={pizzaInfo}
+					setPizzaInfo={setPizzaInfo}
+					selectedImage={selectedImage}
+					setSelectedImage={setSelectedImage}
+					formRef={formRef}
+				/>
 			</form>
 		</section>
 	)
