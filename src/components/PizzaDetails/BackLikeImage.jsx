@@ -30,6 +30,7 @@ const BackLikeImage = ({ image }) => {
 	useEffect(() => {
 		let unmounted = false
 		session &&
+			session.user.type == 'User' &&
 			!unmounted &&
 			onSnapshot(
 				collection(db, 'users', session.user.firebaseID, 'likes'),
@@ -40,8 +41,10 @@ const BackLikeImage = ({ image }) => {
 	}, [session])
 
 	useEffect(() => {
-		setHasLiked(likes.findIndex(like => like.pizzaId === id) != -1)
-	}, [id, likes])
+		session &&
+			session.user.type == 'User' &&
+			setHasLiked(likes.findIndex(like => like.pizzaId === id) != -1)
+	}, [id, likes, session])
 
 	return (
 		<div className='flex flex-col w-[90%] mx-auto lg:col-span-1 lg:row-span-2'>
@@ -56,7 +59,9 @@ const BackLikeImage = ({ image }) => {
 				</Link>
 
 				<button
-					disabled={session === null}
+					disabled={
+						session === null || (session && session.user.type == 'Admin')
+					}
 					onClick={() => likePizza()}
 					className='bg-white rounded-lg p-1 text-red-500 
 									   disabled:text-gray-400 disabled:border-gray-400 disabled:cursor-not-allowed'
