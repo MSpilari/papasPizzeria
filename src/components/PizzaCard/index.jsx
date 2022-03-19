@@ -35,6 +35,7 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 	useEffect(() => {
 		let unmounted = false
 		session &&
+			session.user.type == 'User' &&
 			!unmounted &&
 			onSnapshot(
 				collection(db, 'users', session.user.firebaseID, 'likes'),
@@ -45,8 +46,10 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 	}, [session])
 
 	useEffect(() => {
-		setHasLiked(likes.findIndex(like => like.pizzaId === id) != -1)
-	}, [id, likes])
+		session &&
+			session.user.type == 'User' &&
+			setHasLiked(likes.findIndex(like => like.pizzaId === id) != -1)
+	}, [id, likes, session])
 
 	return (
 		<div className='w-[90%] max-w-xs h-[200px] flex flex-col items-center border-2 border-slate-300 rounded-3xl overflow-hidden my-2 lg:mx-auto'>
@@ -69,7 +72,9 @@ const PizzaCard = ({ name, description, image, price, id }) => {
 					</span>
 				</span>
 				<button
-					disabled={session === null}
+					disabled={
+						session === null || (session && session.user.type == 'Admin')
+					}
 					onClick={() => likePizza()}
 					className={`text-2xl text-red-500 border-2 rounded-lg
 					disabled:text-gray-400 disabled:border-gray-400 disabled:cursor-not-allowed`}
