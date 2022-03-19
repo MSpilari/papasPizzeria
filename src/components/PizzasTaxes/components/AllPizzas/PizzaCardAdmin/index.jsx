@@ -1,9 +1,15 @@
 import Image from 'next/image'
 import { AiOutlineClose } from 'react-icons/ai'
 import { Loading } from '../../../../Loading'
+import { deleteDoc, doc } from 'firebase/firestore'
+import { db } from '../../../../../../firebase'
 
 const PizzaCardAdmin = ({ itemInfo }) => {
-	const { image, name } = itemInfo
+	const { image, name, firebaseId } = itemInfo
+
+	function removePizza(pizzaId) {
+		return deleteDoc(doc(db, 'pizzas', pizzaId))
+	}
 
 	return (
 		<section className='w-[90%] mx-auto mt-3 border-2 border-slate-200 rounded-lg'>
@@ -24,7 +30,10 @@ const PizzaCardAdmin = ({ itemInfo }) => {
 				<div className='w-[calc(100%-150px)] flex flex-col'>
 					<h3 className='w-full truncate text-lg'>{name}</h3>
 				</div>
-				<button className='ml-auto mb-auto mt-1 mr-1 text-lg text-guideRed'>
+				<button
+					onClick={() => removePizza(firebaseId)}
+					className='ml-auto mb-auto mt-1 mr-1 text-lg text-guideRed'
+				>
 					<AiOutlineClose />
 				</button>
 			</div>
