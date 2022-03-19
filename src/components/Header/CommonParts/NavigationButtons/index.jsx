@@ -19,6 +19,7 @@ const NavigationButtons = () => {
 	useEffect(() => {
 		let unmounted = false
 		session &&
+			session.user.type == 'User' &&
 			!unmounted &&
 			onSnapshot(
 				collection(db, 'users', session.user.firebaseID, 'likes'),
