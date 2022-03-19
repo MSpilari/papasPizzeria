@@ -12,7 +12,10 @@ const SubmitButton = ({
 	formRef
 }) => {
 	async function uploadPizza() {
-		const docRef = await addDoc(collection(db, 'pizzas'), pizzaInfo)
+		const docRef = await addDoc(collection(db, 'pizzas'), {
+			...pizzaInfo,
+			optionals
+		})
 
 		const imageRef = ref(storage, `pizzas/${docRef.id}/image`)
 
@@ -34,12 +37,6 @@ const SubmitButton = ({
 			className='disabled:text-slate-400 disabled:cursor-not-allowed'
 			onClick={e => {
 				e.preventDefault()
-				setPizzaInfo(prevState => {
-					return {
-						...prevState,
-						optionals
-					}
-				})
 				return uploadPizza()
 			}}
 		>
