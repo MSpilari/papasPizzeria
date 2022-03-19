@@ -1,6 +1,6 @@
 import { formatter } from '../../utils/currencyFormatter'
 
-const Optionals = ({ optional, addOns, setAddOns }) => {
+const Optionals = ({ optionals, addOns, setAddOns }) => {
 	const handleOptionals = event => {
 		const { name, value, checked } = event.target
 
@@ -22,7 +22,7 @@ const Optionals = ({ optional, addOns, setAddOns }) => {
 			<h2 className='my-1 w-full'>Choice of Add On</h2>
 
 			<div className='flex flex-col w-full'>
-				{optional.map((option, index) => {
+				{optionals.map((option, index) => {
 					const { ingredient, optPrice } = option
 
 					return (
