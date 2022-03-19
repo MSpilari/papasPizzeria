@@ -7,7 +7,7 @@ import { Optionals } from './Optionals'
 import { TitlePriceQtyDesc } from './TitlePriceQtyDesc'
 
 const PizzaDetails = ({ pizzaData }) => {
-	const { image, description, name, optional, price } = pizzaData
+	const { image, description, name, optionals, price } = pizzaData
 	const [quantity, setQuantity] = useState(1)
 	const [addOns, setAddOns] = useState([])
 
@@ -31,7 +31,7 @@ const PizzaDetails = ({ pizzaData }) => {
 				fullCost={fullCost}
 			/>
 
-			<Optionals optional={optional} addOns={addOns} setAddOns={setAddOns} />
+			<Optionals optionals={optionals} addOns={addOns} setAddOns={setAddOns} />
 
 			<button
 				className='flex items-center mx-auto my-2 py-1 
