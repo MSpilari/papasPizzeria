@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { AiOutlineClose } from 'react-icons/ai'
 import { handleInputChanges } from '../../../../../utils/handleInputChanges'
 
 const Optionals = ({
@@ -10,6 +11,13 @@ const Optionals = ({
 	const ingredientRef = useRef(null)
 	const optPriceRef = useRef(null)
 
+	function removeOptional(name, price) {
+		const filteredOpt = optionals.filter(
+			opt => opt.ingredient != name && opt.optPrice != price
+		)
+		setOptionals(filteredOpt)
+	}
+
 	return (
 		<div className='my-1'>
 			<h4>Optionals</h4>
@@ -19,6 +27,13 @@ const Optionals = ({
 					<li key={index} className='flex my-1'>
 						<p>Ingredient: {opt.ingredient}</p>
 						<p className='ml-2'>optPrice: {opt.optPrice}</p>
+						<button
+							type='button'
+							onClick={() => removeOptional(opt.ingredient, opt.optPrice)}
+							className='ml-2 text-guideRed text-lg'
+						>
+							<AiOutlineClose />
+						</button>
 					</li>
 				))}
 			</ul>
