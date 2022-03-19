@@ -54,6 +54,7 @@ export default NextAuth({
 				const data = await res.json()
 				session.user.firebaseID = data.userID
 			}
+			session.user.type = session.user.name ? 'User' : 'Admin'
 			return session
 		},
 		async signIn({ account, email, profile, user, credentials }) {
