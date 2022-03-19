@@ -5,7 +5,7 @@ import { BsPersonFill } from 'react-icons/bs'
 const UserAvatar = ({ sideProfile }) => {
 	const { data: session, status } = useSession()
 
-	return status == 'authenticated' ? (
+	return session && session.user.image ? (
 		<div
 			className={`relative mr-3 h-14 w-16 rounded-full overflow-hidden lg:mx-5
                  ${sideProfile && 'mt-3 h-20 w-20 mr-0 lg:mx-0'}`}
