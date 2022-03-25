@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 import { formatter } from '../../utils/currencyFormatter'
 import { CartItem } from './CartItem'
 
-const CartWrapper = () => {
-	const tax = 10
-	const delivery = 5
+const CartWrapper = ({ taxes }) => {
+	const tax = Number(taxes.tax)
+	const delivery = Number(taxes.deliveryTax)
 	const cart = useSelector(state => state.cart)
 
 	const finalPrice = cart
